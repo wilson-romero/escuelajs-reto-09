@@ -1,8 +1,14 @@
-const { productsMock } = require('../utils/mocks');
+const MongoConnect = require('../lib/mongo');
 
 class ProductService {
+  constructor() {
+    this.collection = 'products';
+    this.mongoDB = new MongoConnect();
+  }
+
   async getProducts() {
-    const products = await Promise.resolve(productsMock);
+    const query = {};
+    const products = await this.mongoDB.getAll(this.collection, query);
     return products || [];
   }
 }
